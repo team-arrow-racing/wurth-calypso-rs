@@ -85,12 +85,26 @@ where
     /// Sends the `AT+sleep` command putting the module into hibernation.
     ///
     /// The module wakes up automatically after the time period specified by the
-    /// `time` parameter.
+    /// `time` parameter or a rising edge on the `WAKE_UP` pin.
+    ///
+    /// On any wakeup trigger, the module starts from the reset vector.
     pub fn sleep(&mut self, time: Duration) -> Confirmation {
         assert!(time <= Duration::secs(86400));
 
         // TODO: let cmd = format!("sleep={}", time); implement sleep time
 
+        match self.command("sleep=0") {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e),
+        }
+    }
+
+    /// Sends `AT+sleep=0` to put the module into a permanent sleep.
+    ///
+    /// The module will only wake on the a rising edge on the `WAKE_UP` pin.
+    ///
+    /// On any wakeup trigger, the module starts from the reset vector.
+    pub fn sleep_forever(&mut self, time: Duration) -> Confirmation {
         match self.command("sleep=0") {
             Ok(_) => Ok(()),
             Err(e) => Err(e),
