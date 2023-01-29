@@ -159,7 +159,7 @@ where
     pub fn get_time(&mut self) -> Result<Time, &'static str> {
         todo!()
     }
-    
+
     /// Set the module system time.
     pub fn set_time(&mut self, time: Time) -> Confirmation {
         todo!()
@@ -174,8 +174,7 @@ where
     pub fn set_persistance(&mut self, persistance: bool) -> Confirmation {
         if persistance {
             self.command_with_ack("set=general,persistent,1")
-        }
-        else {
+        } else {
             self.command_with_ack("set=general,persistent,0")
         }
     }
