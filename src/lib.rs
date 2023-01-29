@@ -99,6 +99,10 @@ where
         self.command_with_ack("powersave")
     }
 
+    /// Sends a given command and awaits a response.
+    ///
+    /// This method is exposed to allow send arbitrary commands if they are not
+    /// yet implemented.
     pub fn command(
         &mut self,
         command: &str,
@@ -110,6 +114,8 @@ where
         Ok("")
     }
 
+    /// Sends a command returning `Ok` with no value if the responsse is ok and
+    /// passing through the error otherwise.
     pub fn command_with_ack(&mut self, command: &str) -> Confirmation {
         match self.command(command) {
             Ok(_) => Ok(()),
