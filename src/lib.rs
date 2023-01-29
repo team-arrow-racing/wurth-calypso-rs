@@ -111,6 +111,18 @@ where
         }
     }
 
+    /// Sends the `AT+powersave` command to put the module into power saving
+    /// mode.
+    ///
+    /// See the product manual for specific details on behaviour whilst in the
+    /// power saving state.
+    pub fn power_save(&mut self) -> Confirmation {
+        match self.command("powersave") {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e),
+        }
+    }
+
     pub fn command(
         &mut self,
         command: &str,
