@@ -52,6 +52,16 @@ pub enum SocketType {
     TCPClient,
 }
 
+/// WLAN mode.
+pub enum WLANMode {
+    /// Station mode
+    STA,
+    /// Access point mode
+    AP,
+    /// Peer-to-peer mode
+    P2P,
+}
+
 impl<S> Calypso<S>
 where
     S: Read<u8> + Write,
@@ -245,6 +255,29 @@ where
         match self.command(command) {
             Ok(_) => Ok(()),
             Err(e) => Err(e),
+        }
+    }
+}
+
+impl From<WLANMode> for &str {
+    fn from(mode: WLANMode) -> Self {
+        match mode {
+            WLANMode::STA => "STA",
+            WLANMode::AP => "AP",
+            WLANMode::P2P => "P2P",
+        }
+    }
+}
+
+impl TryFrom<&str> for WLANMode {
+    type Error = &'static str;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+            "STA" => Ok(WLANMode::STA),
+            "AP" => Ok(WLANMode::AP),
+            "P2P" => Ok(WLANMode::P2P),
+            _ => Err("value was not STA, AP, or P2P.")
         }
     }
 }
