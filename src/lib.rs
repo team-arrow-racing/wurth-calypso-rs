@@ -26,10 +26,7 @@ where
     ///
     /// On boot up the network processor is started by default.
     pub fn start(&mut self) -> Confirmation {
-        match self.command("start") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("start")
     }
 
     /// Sends the `AT+stop` command to put the NWP into hibernation.
@@ -37,19 +34,13 @@ where
     /// This will result in a loss of all on-going transmissions and
     /// connections.
     pub fn stop(&mut self) -> Confirmation {
-        match self.command("stop") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("stop")
     }
 
     /// Sends the `AT+test` command to test if the modules is ready to receive
     /// further commands.
     pub fn test(&mut self) -> Confirmation {
-        match self.command("test") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("test")
     }
 
     /// Sends the `AT+reboot` command performing a software reset of the module.
@@ -57,10 +48,7 @@ where
     /// The module will internally put the NWP to hibernate before restarting
     /// from the reset vector.
     pub fn reboot(&mut self) -> Confirmation {
-        match self.command("reboot") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("reboot")
     }
 
     /// Sends the `AT+factoryreset` command restoring the module to the factory
@@ -76,10 +64,7 @@ where
     /// this operation can result in permanent damage to the module.
     /// </p>
     pub fn factory_reset(&mut self) -> Confirmation {
-        match self.command("factoryreset") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("factoryreset")
     }
 
     /// Sends the `AT+sleep` command putting the module into hibernation.
@@ -93,10 +78,7 @@ where
 
         // TODO: let cmd = format!("sleep={}", time); implement sleep time
 
-        match self.command("sleep=0") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("sleep=0")
     }
 
     /// Sends `AT+sleep=0` to put the module into a permanent sleep.
@@ -105,10 +87,7 @@ where
     ///
     /// On any wakeup trigger, the module starts from the reset vector.
     pub fn sleep_forever(&mut self, time: Duration) -> Confirmation {
-        match self.command("sleep=0") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("sleep=0")
     }
 
     /// Sends the `AT+powersave` command to put the module into power saving
@@ -117,10 +96,7 @@ where
     /// See the product manual for specific details on behaviour whilst in the
     /// power saving state.
     pub fn power_save(&mut self) -> Confirmation {
-        match self.command("powersave") {
-            Ok(_) => Ok(()),
-            Err(e) => Err(e),
-        }
+        self.command_with_ack("powersave")
     }
 
     pub fn command(
@@ -132,5 +108,12 @@ where
         self.serial.write_str("\r\n").unwrap();
 
         Ok("")
+    }
+
+    pub fn command_with_ack(&mut self, command: &str) -> Confirmation {
+        match self.command(command) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e),
+        }
     }
 }
