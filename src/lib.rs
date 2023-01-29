@@ -233,6 +233,21 @@ where
         todo!()
     }
 
+    // WLAN commands
+
+    /// Set the WLAN mode.
+    ///
+    /// The AP mode is primarily intended for device provisioning and can
+    /// support up to 4 stations.
+    ///
+    /// The AP mode consumes more power and is therefore not suitable for
+    /// low-power applications.
+    pub fn set_wlan_mode(&mut self, mode: WLANMode) -> Confirmation {
+        let _mode: &str = mode.into();
+
+        todo!()
+    }
+
     /// Sends a given command and awaits a response.
     ///
     /// This method is exposed to allow send arbitrary commands if they are not
@@ -276,7 +291,7 @@ impl TryFrom<&str> for WLANMode {
             "STA" => Ok(WLANMode::STA),
             "AP" => Ok(WLANMode::AP),
             "P2P" => Ok(WLANMode::P2P),
-            _ => Err("value was not STA, AP, or P2P.")
+            _ => Err("value was not STA, AP, or P2P."),
         }
     }
 }
