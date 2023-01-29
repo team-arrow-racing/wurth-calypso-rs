@@ -1,6 +1,7 @@
 [package]
 name = "wurth-calypso"
 description = "Driver for the Würth Elektronik Calypso Wi-Fi radio module."
+repository = "https://gitlab.com/team-arrow-racing/wurth-calypso"
 version = "0.1.0"
 edition = "2021"
 license = "MPL-2.0"
