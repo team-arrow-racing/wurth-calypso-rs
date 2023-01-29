@@ -13,6 +13,45 @@ type Confirmation = Result<(), &'static str>;
 
 type Duration = fugit::SecsDurationU32;
 
+/// Version information.
+// WIP: static lifetime is likely wrong, but this is just so it compiles.
+pub struct Version {
+    chip_id: &'static str,
+    mac: &'static str,
+    phy: &'static str,
+    nwp: &'static str,
+    rom: &'static str,
+    firmware: &'static str,
+}
+
+/// System time.
+pub struct Time {
+    hours: u8,
+    minutes: u8,
+    seconds: u8,
+    day: u8,
+    month: u8,
+    year: u16,
+}
+
+/// Unique device identifier.
+pub type UDID = [u8; 16];
+
+/// Parity setting.
+#[derive(Copy, Clone)]
+pub enum Parity {
+    None = 0,
+    Even = 1,
+    Odd = 2,
+}
+
+/// Socket type.
+pub enum SocketType {
+    UDP,
+    TCPServer,
+    TCPClient,
+}
+
 impl<S> Calypso<S>
 where
     S: Read<u8> + Write,
@@ -97,6 +136,92 @@ where
     /// power saving state.
     pub fn power_save(&mut self) -> Confirmation {
         self.command_with_ack("powersave")
+    }
+
+    // General configuration
+
+    /// Retrives the module component version information.
+    pub fn get_version(&mut self) -> Result<Version, &'static str> {
+        todo!()
+    }
+
+    /// Gets the current module system time.
+    pub fn get_time(&mut self) -> Result<Time, &'static str> {
+        todo!()
+    }
+    
+    /// Set the module system time.
+    pub fn set_time(&mut self, time: Time) -> Confirmation {
+        todo!()
+    }
+
+    /// If `true`, module settings are retained after reset.
+    pub fn get_persistance(&mut self) -> Result<bool, &'static str> {
+        todo!()
+    }
+
+    /// Configure if module settings are retained after reset.
+    pub fn set_persistance(&mut self, persistance: bool) -> Confirmation {
+        if persistance {
+            self.command_with_ack("set=general,persistent,1")
+        }
+        else {
+            self.command_with_ack("set=general,persistent,0")
+        }
+    }
+
+    /// Gets the unique device identifier.
+    pub fn get_udid(&mut self) -> Result<UDID, &'static str> {
+        todo!()
+    }
+
+    // UART configuration
+
+    /// Gets the current UART baud rate setting.
+    // TODO: use embedded_time library for baud rate type.
+    pub fn get_uart_baud_rate(&mut self) -> Result<u32, &'static str> {
+        todo!()
+    }
+
+    /// Configure the UART baud rate setting.
+    // TODO: use embedded_time library for baud rate type.
+    pub fn set_uart_baud_rate(&mut self, baud: u32) -> Confirmation {
+        todo!()
+    }
+
+    /// Gets the current UART parity setting.
+    pub fn get_uart_parity(&mut self) -> Result<Parity, &'static str> {
+        todo!()
+    }
+
+    /// Configure the UART parity setting.
+    pub fn set_uart_parity(&mut self, parity: Parity) -> Confirmation {
+        todo!()
+    }
+
+    /// Gets the current UART flow control setting.
+    pub fn get_uart_flow_control(&mut self) -> Result<bool, &'static str> {
+        todo!()
+    }
+
+    /// Configure the UART flow control setting.
+    pub fn set_uart_flow_control(&mut self) -> Confirmation {
+        todo!()
+    }
+
+    // Transparent mode configuration
+    // TODO: this is not currently part of our required feature set.
+
+    /// GPIO configuration
+
+    /// Get the remote GPIO lock state.
+    pub fn get_gpio_remote_lock(&mut self) -> Result<bool, &'static str> {
+        todo!()
+    }
+
+    /// Configure the remote GPIO lock state.
+    pub fn set_gpio_remote_lock(&mut self, locked: bool) -> Confirmation {
+        todo!()
     }
 
     /// Sends a given command and awaits a response.
