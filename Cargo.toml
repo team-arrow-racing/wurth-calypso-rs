@@ -1,10 +1,19 @@
 [package]
 name = "wurth-calypso"
+authors = [
+    "The Team Arrow Racing Association firmware development team",
+    "Liam Kinne <liam@kinne.io>",
+]
 description = "Driver for the Würth Elektronik Calypso Wi-Fi radio module."
+categories = ["embedded", "no-std"]
 repository = "https://gitlab.com/team-arrow-racing/wurth-calypso"
+documentation = "https://docs.rs/wurth-calypso"
 version = "0.1.0"
 edition = "2021"
 license = "MPL-2.0"
+
+[lib]
+name = "wurth_calypso"
 
 [dependencies]
 embedded-hal = "0.2.7"
