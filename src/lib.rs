@@ -3,6 +3,7 @@
 
 use core::fmt::Write;
 use embedded_hal::serial::Read;
+use heapless::String;
 
 /// Interface to a Calypso Wi-Fi module.
 pub struct Calypso<S> {
@@ -70,7 +71,9 @@ where
 {
     /// Creates a new Calypso instance
     pub fn new(serial: S) -> Self {
-        Calypso { serial }
+        Calypso {
+            serial,
+        }
     }
 
     /// Sends the `AT+start` command to start the network processor unit (NWP).
@@ -127,9 +130,11 @@ where
     pub fn sleep(&mut self, time: Duration) -> Confirmation {
         assert!(time <= Duration::secs(86400));
 
-        // TODO: let cmd = format!("sleep={}", time); implement sleep time
+        let mut cmd: String<16> = String::new();
 
-        self.command_with_ack("sleep=0")
+        let _ = write!(cmd, "sleep={}", time);
+
+        self.command_with_ack(cmd.as_mut_str())
     }
 
     /// Sends `AT+sleep=0` to put the module into a permanent sleep.
@@ -174,11 +179,12 @@ where
 
     /// Configure if module settings are retained after reset.
     pub fn set_persistance(&mut self, persistance: bool) -> Confirmation {
-        if persistance {
-            self.command_with_ack("set=general,persistent,1")
-        } else {
-            self.command_with_ack("set=general,persistent,0")
-        }
+        let mut cmd: String<32> = String::new();
+
+        // bool cast to u8 to send '0' or '1' as per the spec.
+        let _ = write!(cmd, "set=general,persistent,{}", persistance as u8);
+
+        self.command_with_ack(cmd.as_mut_str())
     }
 
     /// Gets the unique device identifier.
@@ -197,7 +203,14 @@ where
     /// Configure the UART baud rate setting.
     // TODO: use embedded_time library for baud rate type.
     pub fn set_uart_baud_rate(&mut self, baud: u32) -> Confirmation {
-        todo!()
+        assert!(baud >= 115200);
+        assert!(baud <= 3000000);
+
+        let mut cmd: String<32> = String::new();
+
+        let _ = write!(cmd, "set=UART,baudrate,{}", baud);
+
+        self.command_with_ack(cmd.as_mut_str())
     }
 
     /// Gets the current UART parity setting.
@@ -207,7 +220,11 @@ where
 
     /// Configure the UART parity setting.
     pub fn set_uart_parity(&mut self, parity: Parity) -> Confirmation {
-        todo!()
+        let mut cmd: String<32> = String::new();
+
+        let _ = write!(cmd, "set=UART,parity,{}", parity as u8);
+
+        self.command_with_ack(cmd.as_mut_str())
     }
 
     /// Gets the current UART flow control setting.
@@ -216,8 +233,12 @@ where
     }
 
     /// Configure the UART flow control setting.
-    pub fn set_uart_flow_control(&mut self) -> Confirmation {
-        todo!()
+    pub fn set_uart_flow_control(&mut self, enabled: bool) -> Confirmation {
+        let mut cmd: String<32> = String::new();
+
+        let _ = write!(cmd, "set=UART,flowcontrol,{}", enabled);
+
+        self.command_with_ack(cmd.as_mut_str())
     }
 
     // Transparent mode configuration
@@ -232,7 +253,11 @@ where
 
     /// Configure the remote GPIO lock state.
     pub fn set_gpio_remote_lock(&mut self, locked: bool) -> Confirmation {
-        todo!()
+        let mut cmd: String<32> = String::new();
+
+        let _ = write!(cmd, "set=GPIO,remote_lock,{}", locked);
+
+        self.command_with_ack(cmd.as_mut_str())
     }
 
     // WLAN commands
@@ -247,7 +272,13 @@ where
     pub fn set_wlan_mode(&mut self, mode: WLANMode) -> Confirmation {
         let _mode: &str = mode.into();
 
-        todo!()
+        let mut cmd: String<32> = String::new();
+
+        let m: &str = mode.into();
+
+        let _ = write!(cmd, "wlanSetMode={}", m);
+
+        self.command_with_ack(cmd.as_mut_str())
     }
 
     /// Sends a given command and awaits a response.

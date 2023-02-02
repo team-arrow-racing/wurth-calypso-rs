@@ -18,3 +18,4 @@ name = "wurth_calypso"
 [dependencies]
 embedded-hal = "0.2.7"
 fugit = "0.3.6"
+heapless = "0.7.16"
