@@ -46,6 +46,7 @@ pub enum Parity {
 }
 
 /// Socket type.
+#[derive(Copy, Clone)]
 pub enum SocketType {
     UDP,
     TCPServer,
@@ -53,6 +54,7 @@ pub enum SocketType {
 }
 
 /// WLAN mode.
+#[derive(Copy, Clone)]
 pub enum WLANMode {
     /// Station mode
     STA,
