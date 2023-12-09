@@ -3,12 +3,7 @@
 
 use core::fmt::Write;
 use embedded_hal::serial::Read;
-use heapless::String;
-
-/// Interface to a Calypso Wi-Fi module.
-pub struct Calypso<S> {
-    serial: S,
-}
+use heapless::{String, Vec};
 
 type Confirmation = Result<(), &'static str>;
 
@@ -65,6 +60,12 @@ pub enum WLANMode {
     P2P,
 }
 
+/// Interface to a Calypso Wi-Fi module.
+pub struct Calypso<S> {
+    serial: S,
+    buffer: Vec<u8, 128>,
+}
+
 impl<S> Calypso<S>
 where
     S: Read<u8> + Write,
@@ -73,6 +74,7 @@ where
     pub fn new(serial: S) -> Self {
         Calypso {
             serial,
+            buffer: Vec::new(),
         }
     }
 
