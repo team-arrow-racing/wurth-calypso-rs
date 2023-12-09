@@ -16,6 +16,7 @@ license = "MIT"
 name = "wurth_calypso"
 
 [dependencies]
+at-commands = "0.5.4"
 embedded-hal = "0.2.7"
 fugit = "0.3.6"
 heapless = "0.7.16"
