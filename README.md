@@ -16,7 +16,7 @@ wurth-calypso = "0.1.0"
 
 ## References
 
-- [Calypso Reference Manual](https://www.we-online.com/components/products/manual/2610011025000_Calypso%20261001102500x%20Manual_rev2.0.pdf)
+- [Calypso Reference Manual Version 2.4](https://www.we-online.com/components/products/manual/2610011025000_Calypso%20261001102500x%20Manual_rev2.4.pdf)
 
 ## License
 
