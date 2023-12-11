@@ -12,57 +12,6 @@ type Confirmation = Result<(), &'static str>;
 
 type Duration = fugit::SecsDurationU32;
 
-/// Version information.
-// WIP: static lifetime is likely wrong, but this is just so it compiles.
-pub struct Version {
-    chip_id: &'static str,
-    mac: &'static str,
-    phy: &'static str,
-    nwp: &'static str,
-    rom: &'static str,
-    firmware: &'static str,
-}
-
-/// System time.
-pub struct Time {
-    hours: u8,
-    minutes: u8,
-    seconds: u8,
-    day: u8,
-    month: u8,
-    year: u16,
-}
-
-/// Unique device identifier.
-pub type UDID = [u8; 16];
-
-/// Parity setting.
-#[derive(Copy, Clone)]
-pub enum Parity {
-    None = 0,
-    Even = 1,
-    Odd = 2,
-}
-
-/// Socket type.
-#[derive(Copy, Clone)]
-pub enum SocketType {
-    UDP,
-    TCPServer,
-    TCPClient,
-}
-
-/// WLAN mode.
-#[derive(Copy, Clone)]
-pub enum WLANMode {
-    /// Station mode
-    STA,
-    /// Access point mode
-    AP,
-    /// Peer-to-peer mode
-    P2P,
-}
-
 /// Interface to a Calypso Wi-Fi module.
 pub struct Calypso<S> {
     serial: S,
