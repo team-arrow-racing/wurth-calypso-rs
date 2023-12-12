@@ -17,7 +17,7 @@ mod wlan;
 pub use constants::*;
 use core::fmt::Write;
 use embedded_hal::serial::Read;
-use heapless::{String, Vec};
+use heapless::Vec;
 
 pub struct Error<'a> {
     pub description: &'a str,
