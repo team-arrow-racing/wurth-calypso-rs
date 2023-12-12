@@ -55,14 +55,3 @@ pub enum SocketType {
     TCPServer,
     TCPClient,
 }
-
-/// WLAN mode.
-#[derive(Copy, Clone)]
-pub enum WLANMode {
-    /// Station mode
-    STA,
-    /// Access point mode
-    AP,
-    /// Peer-to-peer mode
-    P2P,
-}

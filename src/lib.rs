@@ -1,15 +1,33 @@
 #![no_std]
 
 mod constants;
+mod device;
+mod dhcp;
+mod dns;
+mod fs;
+mod gpio;
+mod http;
+mod mdns;
+mod mqtt;
+mod ping;
+mod sntp;
+mod socket;
+mod wlan;
 
 pub use constants::*;
 use core::fmt::Write;
 use embedded_hal::serial::Read;
 use heapless::{String, Vec};
 
-type Confirmation = Result<(), &'static str>;
+pub struct Error<'a> {
+    pub description: &'a str,
+    pub code: i16,
+}
 
-type Duration = fugit::SecsDurationU32;
+pub type RequestResult<'a, T> = Result<T, Error<'a>>;
+pub type ConfirmationResult<'a> = Result<(), Error<'a>>;
+
+pub type Duration = fugit::SecsDurationU32;
 
 /// Interface to a Calypso Wi-Fi module.
 pub struct Calypso<S> {
@@ -32,7 +50,7 @@ where
     /// Sends the `AT+start` command to start the network processor unit (NWP).
     ///
     /// On boot up the network processor is started by default.
-    pub fn start(&mut self) -> Confirmation {
+    pub fn start(&mut self) -> ConfirmationResult {
         self.command_with_ack("start")
     }
 
