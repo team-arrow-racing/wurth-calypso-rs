@@ -16,7 +16,7 @@ license = "MIT"
 name = "wurth_calypso"
 
 [dependencies]
-atat = "0.20.0"
+atat = { version = "0.20.0", features = ["async"] }
 embedded-hal = "0.2.7"
 fugit = "0.3.6"
 heapless = "0.7.16"
