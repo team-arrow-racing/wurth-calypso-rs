@@ -277,25 +277,4 @@ where
     }
 }
 
-impl From<WLANMode> for &str {
-    fn from(mode: WLANMode) -> Self {
-        match mode {
-            WLANMode::STA => "STA",
-            WLANMode::AP => "AP",
-            WLANMode::P2P => "P2P",
-        }
-    }
-}
-
-impl TryFrom<&str> for WLANMode {
-    type Error = &'static str;
-
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        match value {
-            "STA" => Ok(WLANMode::STA),
-            "AP" => Ok(WLANMode::AP),
-            "P2P" => Ok(WLANMode::P2P),
-            _ => Err("value was not STA, AP, or P2P."),
-        }
-    }
 }

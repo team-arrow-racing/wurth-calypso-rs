@@ -11,6 +11,29 @@ pub enum WlanMode {
     P2P,
 }
 
+impl From<WlanMode> for &str {
+    fn from(mode: WlanMode) -> Self {
+        match mode {
+            WlanMode::STA => "STA",
+            WlanMode::AP => "AP",
+            WlanMode::P2P => "P2P",
+        }
+    }
+}
+
+impl TryFrom<&str> for WlanMode {
+    type Error = &'static str;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+            "STA" => Ok(WlanMode::STA),
+            "AP" => Ok(WlanMode::AP),
+            "P2P" => Ok(WlanMode::P2P),
+            _ => Err("value was not STA, AP, or P2P."),
+        }
+    }
+}
+
 /// Security type.
 #[derive(Copy, Clone)]
 pub enum SecurityType {
