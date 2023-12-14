@@ -22,4 +22,4 @@ fugit = "0.3.6"
 heapless = "0.7.16"
 
 [features]
-defmt = ["at-commands/defmt", "fugit/defmt", "heapless/defmt"]
+defmt = ["fugit/defmt", "heapless/defmt"]
