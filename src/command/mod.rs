@@ -3,6 +3,7 @@
 //! See section 8 in the user manual.
 
 pub mod device;
+pub mod wlan;
 
 use atat::atat_derive::{AtatResp, AtatUrc};
 
