@@ -75,6 +75,8 @@ async fn main() {
     loop {
         let response = client.send(&command::device::Test {}).await;
         println!("Response: {:?}", response);
+
+        tokio::time::sleep(Duration::from_secs(1)).await;
     }
 }
 
