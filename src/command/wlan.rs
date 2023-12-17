@@ -135,3 +135,55 @@ pub struct Connect {
 #[derive(AtatCmd)]
 #[at_cmd("+wlanDisconnect", NoResponse, timeout_ms = 100)]
 pub struct Disconnect {}
+
+#[derive(AtatCmd)]
+#[at_cmd(
+    "+wlanProfileAdd",
+    NoResponse,
+    timeout_ms = 100,
+    quote_escape_strings = false
+)]
+pub struct ProfileAdd {
+    /// SSID name
+    #[at_arg(position = 0)]
+    pub ssid: String<32>,
+    /// Optional mac address
+    #[at_arg(position = 1)]
+    pub bssid: Option<String<17>>,
+    /// Security type
+    pub security_type: String<10>,
+    /// Security key
+    pub security_key: Option<String<63>>,
+    /// Enterprise user name
+    pub security_ext_user: Option<String<63>>,
+    /// Enterprise anonymous user name
+    pub security_ext_anon_user: Option<String<63>>,
+    /// Enterprise EAP protocol
+    pub security_ext_eap_method: Option<String<14>>,
+    /// Profile priority
+    pub priority: u8,
+}
+
+#[derive(AtatCmd)]
+#[at_cmd(
+    "+wlanProfileGet",
+    NoResponse,
+    timeout_ms = 100,
+    quote_escape_strings = false
+)]
+pub struct ProfileGet {
+    /// Index
+    index: u8,
+}
+
+#[derive(AtatCmd)]
+#[at_cmd(
+    "+wlanProfileDel",
+    NoResponse,
+    timeout_ms = 100,
+    quote_escape_strings = false
+)]
+pub struct ProfileDelete {
+    /// Index
+    index: u8,
+}
