@@ -1,49 +1,85 @@
 #![no_std]
 
+pub mod command;
 mod constants;
-mod device;
-mod dhcp;
-mod dns;
-mod fs;
-mod gpio;
-mod http;
-mod mdns;
-mod mqtt;
-mod ping;
-mod sntp;
-mod socket;
-mod wlan;
 
+use atat::{asynch::AtatClient, Error};
+use command::{wlan::Mode as WlanMode, NoResponse};
 pub use constants::*;
-use core::fmt::Write;
-use embedded_hal::serial::Read;
-use heapless::Vec;
+use fugit::MillisDurationU32;
 
-pub struct Error<'a> {
-    pub description: &'a str,
-    pub code: i16,
+pub struct Calypso<C: AtatClient> {
+    client: C,
 }
 
-pub type RequestResult<'a, T> = Result<T, Error<'a>>;
-pub type ConfirmationResult<'a> = Result<(), Error<'a>>;
+impl<C: AtatClient> Calypso<C> {
+    pub fn new(client: C) -> Self {
+        Self { client }
+    }
 
-pub type Duration = fugit::SecsDurationU32;
+    /// Start the network processor unit (NWP).
+    pub async fn start(&mut self) -> Result<NoResponse, Error> {
+        self.client.send(&command::device::Start {}).await
+    }
 
-/// Interface to a Calypso Wi-Fi module.
-pub struct Calypso<S> {
-    serial: S,
-    buffer: Vec<u8, 128>,
-}
+    /// Stop the network processor unit (NWP).
+    pub async fn stop(&mut self) -> Result<NoResponse, Error> {
+        self.client
+            .send(&command::device::Stop { timeout: 0 })
+            .await
+    }
 
-impl<S> Calypso<S>
-where
-    S: Read<u8> + Write,
-{
-    /// Creates a new Calypso instance
-    pub fn new(serial: S) -> Self {
-        Calypso {
-            serial,
-            buffer: Vec::new(),
-        }
+    /// Test the Calypso is responsive.
+    pub async fn test(&mut self) -> Result<NoResponse, Error> {
+        self.client.send(&command::device::Test {}).await
+    }
+
+    /// Reboot the Calypso.
+    pub async fn reboot(&mut self) -> Result<NoResponse, Error> {
+        self.client.send(&command::device::Reboot {}).await
+    }
+
+    /// Perform a factory reset.
+    ///
+    /// Warning: Resetting of powering off the module during this operation can
+    /// result in permanent damage to the module.
+    pub async fn factory_reset(&mut self) -> Result<NoResponse, Error> {
+        self.client.send(&command::device::FactoryReset {}).await
+    }
+
+    /// Sleep for a given number of milliseconds.
+    ///
+    /// Setting the duration to 0ms will cause the Calypso to sleep forever.
+    pub async fn sleep(
+        &mut self,
+        ms: MillisDurationU32,
+    ) -> Result<NoResponse, Error> {
+        self.client
+            .send(&command::device::Sleep {
+                timeout: ms.to_millis(),
+            })
+            .await
+    }
+
+    /// Sleep until reset or interrupt.
+    pub async fn sleep_forever(&mut self) -> Result<NoResponse, Error> {
+        self.client
+            .send(&command::device::Sleep { timeout: 0 })
+            .await
+    }
+
+    /// Enter into power saving mode.
+    pub async fn powersave(&mut self) -> Result<NoResponse, Error> {
+        self.client.send(&command::device::PowerSave {}).await
+    }
+
+    /// Set WIFI operating mode.
+    pub async fn wifi_set_mode(
+        &mut self,
+        mode: WlanMode,
+    ) -> Result<NoResponse, Error> {
+        self.client
+            .send(&command::wlan::SetMode { mode: mode.into() })
+            .await
     }
 }
