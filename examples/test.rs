@@ -16,6 +16,7 @@ use tokio_serial::SerialPortBuilderExt;
 use tokio_serial::SerialStream;
 use wurth_calypso::command;
 use wurth_calypso::command::Urc;
+use wurth_calypso::Calypso;
 
 // Standard UART parameters
 // Baud: 921600
@@ -70,10 +71,12 @@ async fn main() {
         Config::default(),
     );
 
+    let mut calypso = Calypso::new(client);
+
     tokio::spawn(ingress_task(ingress, FromTokio::new(reader)));
 
     loop {
-        let response = client.send(&command::device::Test {}).await;
+        let response = calypso.test().await;
         println!("Response: {:?}", response);
 
         tokio::time::sleep(Duration::from_secs(1)).await;

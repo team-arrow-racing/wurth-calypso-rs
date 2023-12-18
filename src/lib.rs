@@ -1,6 +1,6 @@
 #![no_std]
 
-mod command;
+pub mod command;
 mod constants;
 
 use atat::{asynch::AtatClient, Error};
