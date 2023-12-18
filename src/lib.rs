@@ -4,7 +4,7 @@ pub mod command;
 mod constants;
 
 use atat::{asynch::AtatClient, Error};
-use command::NoResponse;
+use command::{wlan::Mode as WlanMode, NoResponse};
 pub use constants::*;
 use fugit::MillisDurationU32;
 
@@ -71,5 +71,15 @@ impl<C: AtatClient> Calypso<C> {
     /// Enter into power saving mode.
     pub async fn powersave(&mut self) -> Result<NoResponse, Error> {
         self.client.send(&command::device::PowerSave {}).await
+    }
+
+    /// Set WIFI operating mode.
+    pub async fn wifi_set_mode(
+        &mut self,
+        mode: WlanMode,
+    ) -> Result<NoResponse, Error> {
+        self.client
+            .send(&command::wlan::SetMode { mode: mode.into() })
+            .await
     }
 }
