@@ -65,7 +65,7 @@ async fn main() {
         URC_SUBSCRIBERS,
     > = Buffers::<Urc, INGRESS_BUF_SIZE, URC_CAPACITY, URC_SUBSCRIBERS>::new();
 
-    let (ingress, mut client) = BUFFERS.split(
+    let (mut ingress, mut client) = BUFFERS.split(
         FromTokio::new(writer),
         DefaultDigester::<Urc>::default(),
         Config::default(),
@@ -73,7 +73,9 @@ async fn main() {
 
     let mut calypso = Calypso::new(client);
 
-    tokio::spawn(ingress_task(ingress, FromTokio::new(reader)));
+    tokio::spawn(async move {
+        ingress.read_from(&mut FromTokio::new(reader)).await;
+    });
 
     loop {
         let response = calypso.test().await;
@@ -81,18 +83,4 @@ async fn main() {
 
         tokio::time::sleep(Duration::from_secs(1)).await;
     }
-}
-
-async fn ingress_task<'a>(
-    mut ingress: Ingress<
-        'a,
-        DefaultDigester<Urc>,
-        Urc,
-        INGRESS_BUF_SIZE,
-        URC_CAPACITY,
-        URC_SUBSCRIBERS,
-    >,
-    mut reader: FromTokio<SerialStream>,
-) -> ! {
-    ingress.read_from(&mut reader).await
 }
