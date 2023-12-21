@@ -29,7 +29,7 @@ pub struct FactoryReset {}
 #[at_cmd("+sleep", EmptyResponse, timeout_ms = 100)]
 pub struct Sleep {
     #[at_arg(position = 0)]
-    pub timeout: u32,
+    pub timeout_secs: u32,
 }
 
 #[derive(AtatCmd)]

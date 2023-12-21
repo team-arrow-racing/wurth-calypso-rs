@@ -286,16 +286,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fugit"
-version = "0.3.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ab17bb279def6720d058cb6c052249938e7f99260ab534879281a95367a87e5"
-dependencies = [
- "defmt",
- "gcd",
-]
-
-[[package]]
 name = "futures"
 version = "0.3.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -383,12 +373,6 @@ dependencies = [
  "pin-utils",
  "slab",
 ]
-
-[[package]]
-name = "gcd"
-version = "2.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d758ba1b47b00caf47f24925c0074ecb20d6dfcffe7f6d53395c0465674841a"
 
 [[package]]
 name = "gimli"
@@ -1159,7 +1143,6 @@ dependencies = [
  "embedded-io",
  "embedded-io-adapters",
  "env_logger",
- "fugit",
  "heapless 0.7.16",
  "tokio",
  "tokio-serial",

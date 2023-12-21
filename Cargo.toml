@@ -18,7 +18,6 @@ name = "wurth_calypso"
 [dependencies]
 atat = { version = "0.20.0", features = ["async", "log"] }
 embedded-hal = "0.2.7"
-fugit = "0.3.6"
 heapless = "0.7.16"
 
 
@@ -31,4 +30,4 @@ embassy-time = { version = "0.2", features = ["std", "generic-queue"] }
 env_logger = "0.10.1"
 
 [features]
-defmt = ["fugit/defmt", "heapless/defmt"]
+defmt = [ "heapless/defmt"]

@@ -6,7 +6,6 @@ mod constants;
 use atat::{asynch::AtatClient, Error};
 use command::{wlan::Mode as WlanMode, EmptyResponse};
 pub use constants::*;
-use fugit::MillisDurationU32;
 
 pub struct Calypso<C: AtatClient> {
     client: C,
@@ -47,16 +46,16 @@ impl<C: AtatClient> Calypso<C> {
         self.client.send(&command::device::FactoryReset {}).await
     }
 
-    /// Sleep for a given number of milliseconds.
+    /// Sleep for a given number of seconds.
     ///
     /// Setting the duration to 0ms will cause the Calypso to sleep forever.
     pub async fn sleep(
         &mut self,
-        ms: MillisDurationU32,
+        seconds: u32,
     ) -> Result<EmptyResponse, Error> {
         self.client
             .send(&command::device::Sleep {
-                timeout: ms.to_millis(),
+                timeout_secs: seconds,
             })
             .await
     }
@@ -64,7 +63,7 @@ impl<C: AtatClient> Calypso<C> {
     /// Sleep until reset or interrupt.
     pub async fn sleep_forever(&mut self) -> Result<EmptyResponse, Error> {
         self.client
-            .send(&command::device::Sleep { timeout: 0 })
+            .send(&command::device::Sleep { timeout_secs: 0 })
             .await
     }
 
