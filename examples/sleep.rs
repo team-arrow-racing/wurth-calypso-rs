@@ -3,7 +3,8 @@
 
 mod common;
 
-use embassy_time; // this stops a linker error cause embassy is dumb
+use embassy_time;
+use fugit::MillisDurationU32; // this stops a linker error cause embassy is dumb
 use std::env;
 use std::time::Duration;
 use wurth_calypso::Calypso;
@@ -19,7 +20,7 @@ async fn main() {
     let mut calypso = Calypso::new(client);
 
     loop {
-        let response = calypso.test().await;
+        let response = calypso.sleep(10).await;
         println!("Response: {:?}", response);
 
         tokio::time::sleep(Duration::from_secs(1)).await;
