@@ -1,4 +1,4 @@
-use super::NoResponse;
+use super::EmptyResponse;
 use atat::atat_derive::{AtatCmd, AtatEnum, AtatResp};
 use heapless::String;
 
@@ -51,7 +51,12 @@ impl Into<String<3>> for SocketProtocol {
 
 /// Create a socket
 #[derive(AtatCmd)]
-#[at_cmd("+socket", NoResponse, timeout_ms = 100, quote_escape_strings = false)]
+#[at_cmd(
+    "+socket",
+    EmptyResponse,
+    timeout_ms = 100,
+    quote_escape_strings = false
+)]
 pub struct Socket {
     #[at_arg(position = 0)]
     pub family: String<5>,
@@ -63,7 +68,7 @@ pub struct Socket {
 
 /// Close a socket
 #[derive(AtatCmd)]
-#[at_cmd("+close", NoResponse, timeout_ms = 100)]
+#[at_cmd("+close", EmptyResponse, timeout_ms = 100)]
 pub struct Close {
     #[at_arg(position = 0)]
     pub socket_id: u8,
@@ -71,7 +76,7 @@ pub struct Close {
 
 /// Bind a socket
 #[derive(AtatCmd)]
-#[at_cmd("+bind", NoResponse, timeout_ms = 100)]
+#[at_cmd("+bind", EmptyResponse, timeout_ms = 100)]
 pub struct Bind {
     #[at_arg(position = 0)]
     pub socket_id: u8,

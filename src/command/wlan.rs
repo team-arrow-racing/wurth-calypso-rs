@@ -1,4 +1,4 @@
-use super::NoResponse;
+use super::EmptyResponse;
 use atat::atat_derive::{AtatCmd, AtatEnum};
 use heapless::String;
 
@@ -25,7 +25,7 @@ impl Into<String<3>> for Mode {
 #[derive(AtatCmd)]
 #[at_cmd(
     "+wlanSetMode",
-    NoResponse,
+    EmptyResponse,
     timeout_ms = 100,
     quote_escape_strings = false
 )]
@@ -37,7 +37,7 @@ pub struct SetMode {
 #[derive(AtatCmd)]
 #[at_cmd(
     "+wlanScan",
-    NoResponse,
+    EmptyResponse,
     timeout_ms = 100,
     quote_escape_strings = false
 )]
@@ -109,7 +109,7 @@ impl Into<String<14>> for SecurityEapType {
 #[derive(AtatCmd)]
 #[at_cmd(
     "+wlanConnect",
-    NoResponse,
+    EmptyResponse,
     timeout_ms = 100,
     quote_escape_strings = false
 )]
@@ -133,13 +133,13 @@ pub struct Connect {
 }
 
 #[derive(AtatCmd)]
-#[at_cmd("+wlanDisconnect", NoResponse, timeout_ms = 100)]
+#[at_cmd("+wlanDisconnect", EmptyResponse, timeout_ms = 100)]
 pub struct Disconnect {}
 
 #[derive(AtatCmd)]
 #[at_cmd(
     "+wlanProfileAdd",
-    NoResponse,
+    EmptyResponse,
     timeout_ms = 100,
     quote_escape_strings = false
 )]
@@ -167,7 +167,7 @@ pub struct ProfileAdd {
 #[derive(AtatCmd)]
 #[at_cmd(
     "+wlanProfileGet",
-    NoResponse,
+    EmptyResponse,
     timeout_ms = 100,
     quote_escape_strings = false
 )]
@@ -179,7 +179,7 @@ pub struct ProfileGet {
 #[derive(AtatCmd)]
 #[at_cmd(
     "+wlanProfileDel",
-    NoResponse,
+    EmptyResponse,
     timeout_ms = 100,
     quote_escape_strings = false
 )]

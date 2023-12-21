@@ -9,7 +9,7 @@ pub mod wlan;
 use atat::atat_derive::{AtatResp, AtatUrc};
 
 #[derive(Debug, Clone, AtatResp, PartialEq)]
-pub struct NoResponse;
+pub struct EmptyResponse;
 
 /// Unsolicited result codes
 #[derive(Debug, PartialEq, Clone, AtatUrc)]

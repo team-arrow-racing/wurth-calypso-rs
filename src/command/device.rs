@@ -1,43 +1,43 @@
-use super::NoResponse;
+use super::EmptyResponse;
 use atat::atat_derive::AtatCmd;
 use heapless::String;
 
 #[derive(AtatCmd)]
-#[at_cmd("+start", NoResponse, timeout_ms = 100)]
+#[at_cmd("+start", EmptyResponse, timeout_ms = 100)]
 pub struct Start {}
 
 #[derive(AtatCmd)]
-#[at_cmd("+stop", NoResponse, timeout_ms = 100)]
+#[at_cmd("+stop", EmptyResponse, timeout_ms = 100)]
 pub struct Stop {
     #[at_arg(position = 0)]
     pub timeout: u16,
 }
 
 #[derive(Clone, AtatCmd)]
-#[at_cmd("+test", NoResponse, timeout_ms = 100)]
+#[at_cmd("+test", EmptyResponse, timeout_ms = 1000)]
 pub struct Test {}
 
 #[derive(AtatCmd)]
-#[at_cmd("+reboot", NoResponse, timeout_ms = 100)]
+#[at_cmd("+reboot", EmptyResponse, timeout_ms = 100)]
 pub struct Reboot {}
 
 #[derive(AtatCmd)]
-#[at_cmd("+factoryreset", NoResponse)]
+#[at_cmd("+factoryreset", EmptyResponse)]
 pub struct FactoryReset {}
 
 #[derive(AtatCmd)]
-#[at_cmd("+sleep", NoResponse, timeout_ms = 100)]
+#[at_cmd("+sleep", EmptyResponse, timeout_ms = 100)]
 pub struct Sleep {
     #[at_arg(position = 0)]
     pub timeout: u32,
 }
 
 #[derive(AtatCmd)]
-#[at_cmd("+powersave", NoResponse, timeout_ms = 100)]
+#[at_cmd("+powersave", EmptyResponse, timeout_ms = 100)]
 pub struct PowerSave {}
 
 #[derive(AtatCmd)]
-#[at_cmd("+get", NoResponse, timeout_ms = 100)]
+#[at_cmd("+get", EmptyResponse, timeout_ms = 100)]
 pub struct Get {
     #[at_arg(position = 0)]
     pub id: String<16>,
@@ -46,7 +46,7 @@ pub struct Get {
 }
 
 #[derive(AtatCmd)]
-#[at_cmd("+set", NoResponse, timeout_ms = 100)]
+#[at_cmd("+set", EmptyResponse, timeout_ms = 100)]
 pub struct Set {
     #[at_arg(position = 0)]
     pub id: String<16>,
