@@ -9,21 +9,10 @@ use atat::{
 use embassy_time; // this stops a linker error cause embassy is dumb
 use embedded_io_adapters::tokio_1::FromTokio;
 use tokio::io::split;
-use tokio::io::AsyncReadExt;
-use tokio::io::AsyncWriteExt;
-use tokio::io::ReadHalf;
 use tokio_serial::SerialPortBuilderExt;
 use tokio_serial::SerialStream;
 use wurth_calypso::command;
-use wurth_calypso::command::Urc;
 use wurth_calypso::Calypso;
-
-// Standard UART parameters
-// Baud: 921600
-// Data bits: 8
-// Stop bits: 1
-// Parity: even
-// Flow control: none
 
 const INGRESS_BUF_SIZE: usize = 1024;
 const URC_CAPACITY: usize = 128;
@@ -34,10 +23,7 @@ async fn main() {
     env_logger::init();
 
     let args: Vec<String> = env::args().collect();
-
     let port_name = args.get(1).expect("Please provide a serial port");
-
-    println!("Serial port: {:?}", port_name);
 
     // we open this port twice so we have a reader and writer instance.
     // yes, `tokio::io::split` exists, but it doesn't work with `tokio_serial`.
@@ -59,15 +45,15 @@ async fn main() {
     writer.set_exclusive(false).unwrap();
 
     static BUFFERS: Buffers<
-        Urc,
+        command::Urc,
         INGRESS_BUF_SIZE,
         URC_CAPACITY,
         URC_SUBSCRIBERS,
-    > = Buffers::<Urc, INGRESS_BUF_SIZE, URC_CAPACITY, URC_SUBSCRIBERS>::new();
+    > = Buffers::<command::Urc, INGRESS_BUF_SIZE, URC_CAPACITY, URC_SUBSCRIBERS>::new();
 
     let (mut ingress, mut client) = BUFFERS.split(
         FromTokio::new(writer),
-        DefaultDigester::<Urc>::default(),
+        DefaultDigester::<command::Urc>::default(),
         Config::default(),
     );
 
