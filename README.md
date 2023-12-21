@@ -14,6 +14,8 @@ Add an entry to your `Cargo.toml`:
 wurth-calypso = "0.1.0"
 ```
 
+You can also enable the optional `defmt` feature.
+
 ## Running the examples
 
 You can run one of the examples like this, remembering to substitute your own serial device instead of `/dev/ttyUSB0`.
