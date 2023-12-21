@@ -1,7 +1,7 @@
 [![crates.io](https://img.shields.io/crates/v/wurth-calypso.svg)](https://crates.io/crates/wurth-calypso)
 [![crates.io](https://img.shields.io/crates/d/wurth-calypso.svg)](https://crates.io/crates/wurth-calypso)
 
-# Wurth Calypso Embedded Driver
+# Würth Calypso Driver
 
 This crate imeplements a driver for the Würth Elektronik Calypso Wi-Fi radio module.
 
