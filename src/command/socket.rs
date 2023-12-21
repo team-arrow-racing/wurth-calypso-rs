@@ -1,5 +1,5 @@
 use super::EmptyResponse;
-use atat::atat_derive::{AtatCmd, AtatEnum, AtatResp};
+use atat::atat_derive::{AtatCmd, AtatEnum};
 use heapless::String;
 
 #[derive(Debug, Clone, Copy, AtatEnum)]
