@@ -14,6 +14,16 @@ Add an entry to your `Cargo.toml`:
 wurth-calypso = "0.1.0"
 ```
 
+## Running the examples
+
+You can run one of the examples like this, remembering to substitute your own serial device instead of `/dev/ttyUSB0`.
+
+```shell
+cargo run --example test -- /dev/ttyUSB0
+```
+
+To see what's going on under the hood, you can turn on trace logging by setting the environment variable `RUST_LOG=trace`.
+
 ## References
 
 - [Calypso Reference Manual Version 2.4](https://www.we-online.com/components/products/manual/2610011025000_Calypso%20261001102500x%20Manual_rev2.4.pdf)
