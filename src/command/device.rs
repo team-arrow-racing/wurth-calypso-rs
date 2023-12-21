@@ -14,7 +14,7 @@ pub struct Stop {
 }
 
 #[derive(Clone, AtatCmd)]
-#[at_cmd("+test", EmptyResponse, timeout_ms = 1000)]
+#[at_cmd("+test", EmptyResponse, timeout_ms = 100)]
 pub struct Test {}
 
 #[derive(AtatCmd)]
