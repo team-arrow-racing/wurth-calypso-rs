@@ -3,8 +3,7 @@
 
 mod common;
 
-use embassy_time;
-use fugit::MillisDurationU32; // this stops a linker error cause embassy is dumb
+use embassy_time; // this stops a linker error cause embassy is dumb
 use std::env;
 use std::time::Duration;
 use wurth_calypso::Calypso;
