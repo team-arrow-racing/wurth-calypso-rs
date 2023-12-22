@@ -37,6 +37,14 @@ pub struct Sleep {
 pub struct PowerSave {}
 
 #[derive(AtatCmd)]
+#[at_cmd("+provisioningStart", EmptyResponse, timeout_ms = 100)]
+pub struct ProvisioningStart {}
+
+#[derive(AtatCmd)]
+#[at_cmd("+provisioningStop", EmptyResponse, timeout_ms = 100)]
+pub struct ProvisioningStop {}
+
+#[derive(AtatCmd)]
 #[at_cmd("+get", EmptyResponse, timeout_ms = 100)]
 pub struct Get {
     #[at_arg(position = 0)]

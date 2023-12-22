@@ -77,6 +77,20 @@ impl<C: AtatClient> Calypso<C> {
         self.client.send(&command::device::PowerSave {}).await
     }
 
+    /// Enter into provisioning mode.
+    pub async fn provisioning_start(&mut self) -> Result<EmptyResponse, Error> {
+        self.client
+            .send(&command::device::ProvisioningStart {})
+            .await
+    }
+
+    /// Exit provisioning mode.
+    pub async fn provisioning_stop(&mut self) -> Result<EmptyResponse, Error> {
+        self.client
+            .send(&command::device::ProvisioningStop {})
+            .await
+    }
+
     /// Set WIFI operating mode.
     pub async fn wlan_set_mode(
         &mut self,
