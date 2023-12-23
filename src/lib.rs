@@ -130,6 +130,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with WEP security.
     pub async fn wlan_connect_wep(
         &mut self,
         ssid: &str,
@@ -149,6 +150,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with WEP Shared security.
     pub async fn wlan_connect_wep_shared(
         &mut self,
         ssid: &str,
@@ -168,6 +170,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with WPA/WPA2 security.
     pub async fn wlan_connect_wpa_wpa2(
         &mut self,
         ssid: &str,
@@ -187,6 +190,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with WPA2-Plus security.
     pub async fn wlan_connect_wpa2_plus(
         &mut self,
         ssid: &str,
@@ -206,6 +210,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with WPA3 security.
     pub async fn wlan_connect_wpa3(
         &mut self,
         ssid: &str,
@@ -225,6 +230,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with Enterprise security.
     pub async fn wlan_connect_enterprise(
         &mut self,
         ssid: &str,
@@ -247,6 +253,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with WPS push-button security.
     pub async fn wlan_connect_wps_pbc(
         &mut self,
         ssid: &str,
@@ -265,6 +272,7 @@ impl<C: AtatClient> Calypso<C> {
             .await
     }
 
+    /// Connect to a WIFI access point with WPS pin-code security.
     pub async fn wlan_connect_wps_pin(
         &mut self,
         ssid: &str,
