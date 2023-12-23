@@ -6,8 +6,8 @@ authors = [
 ]
 description = "Driver for the Würth Elektronik Calypso Wi-Fi radio module."
 categories = ["embedded", "no-std"]
-repository = "https://gitlab.com/team-arrow-racing/wurth-calypso"
-documentation = "https://docs.rs/wurth-calypso"
+repository = "https://github.com/team-arrow-racing/wurth-calypso-rs"
+documentation = "https://docs.rs/wurth-calypso/latest/wurth_calypso/"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
