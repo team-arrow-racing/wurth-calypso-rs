@@ -10,7 +10,6 @@ use command::{
     EmptyResponse,
 };
 pub use constants::*;
-use heapless::String;
 
 pub struct Calypso<C: AtatClient> {
     client: C,
