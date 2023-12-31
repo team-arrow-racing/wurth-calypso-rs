@@ -11,11 +11,13 @@ use command::{
 };
 pub use constants::*;
 
+/// Calypso client
 pub struct Calypso<C: AtatClient> {
     client: C,
 }
 
 impl<C: AtatClient> Calypso<C> {
+    /// Creates a new client instance.
     pub fn new(client: C) -> Self {
         Self { client }
     }
