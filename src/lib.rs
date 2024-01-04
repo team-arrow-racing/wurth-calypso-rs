@@ -3,6 +3,8 @@
 pub mod command;
 mod constants;
 
+pub use atat;
+
 use atat::{asynch::AtatClient, Error};
 use command::wlan::SecurityEapType as WlanEnterpriseEapType;
 use command::{
